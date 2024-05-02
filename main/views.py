@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from .forms import signupform,RatingForm,ShippingAddressForm
@@ -301,9 +302,14 @@ def checkout_complete(request):
     cart_items=Cart.objects.filter(user=request.user)
     print("***********>>>>>>>>",cart_items)
     # total_amount=items.total
+    date=datetime.datetime.now()
+    delivery_date_delta=datetime.timedelta(days=2)
+    delivery_date=date+delivery_date_delta
     context={
         'items':items,
-        'cart_items':cart_items
+        'cart_items':cart_items,
+        'date':date,
+        'delivery_date':delivery_date
     }
     return render(request,'main/checkout_complete.html',context)
 
