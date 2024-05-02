@@ -1,0 +1,155 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<!-- BEGIN #checkout-cart -->
+<div class="section-container" id="checkout-cart">
+    <!-- BEGIN container -->
+    <div class="container">
+        <!-- BEGIN checkout -->
+        <div class="checkout">
+            <form action="" method="POST" name="form_checkout">
+                <!-- BEGIN checkout-header -->
+                <div class="checkout-header">
+                    <!-- BEGIN row -->
+                    <div class="row">
+                        <!-- BEGIN col-3 -->
+                        <div class="col-md-3 col-sm-3">
+                            <div class="step active">
+                                <a href="#">
+                                    <div class="number">1</div>
+                                    <div class="info">
+                                        <div class="title">Delivery Options</div>
+                                        <div class="desc">Lorem ipsum dolor sit amet.</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END col-3 -->
+                        <!-- BEGIN col-3 -->
+                        <div class="col-md-3 col-sm-3">
+                            <div class="step">
+                                <a href="{% url 'checkoutinfo' %}">
+                                    <div class="number">2</div>
+                                    <div class="info">
+                                        <div class="title">Shipping Address</div>
+                                        <div class="desc">Vivamus eleifend euismod.</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END col-3 -->
+                        <!-- BEGIN col-3 -->
+                        <div class="col-md-3 col-sm-3">
+                            <div class="step">
+                                <a href="{% url 'checkoutpayment' %}">
+                                    <div class="number">3</div>
+                                    <div class="info">
+                                        <div class="title">Payment</div>
+                                        <div class="desc">Aenean ut pretium ipsum. </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END col-3 -->
+                        <!-- BEGIN col-3 -->
+                        <div class="col-md-3 col-sm-3">
+                            <div class="step">
+                                <a href="{% url 'checkoutcomplete' %}">
+                                    <div class="number">4</div>
+                                    <div class="info">
+                                        <div class="title">Complete Payment</div>
+                                        <div class="desc">Curabitur interdum libero.</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- END col-3 -->
+                    </div>
+                    <!-- END row -->
+                </div>
+                <!-- END checkout-header -->
+                <!-- BEGIN checkout-body -->
+                <div class="checkout-body">
+                    <div class="table-responsive">
+                        <table class="table table-cart">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Quantity</th>
+                                    <th class="text-center">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for c in carts %}
+                                <tr>
+                                    <td class="cart-product">
+                                        <div class="product-img">
+                                            <img src="{{c.product.img.url}}" alt="" />
+                                        </div>
+                                        <div class="product-info">
+                                            <div class="title">{{c.product.product_name}} {{c.ProductDetail.memory}} ({{c.product_detail.color}})</div>
+                                            <div class="desc">Delivers {{c.created_at}} - Free</div>
+                                        </div>
+                                        <div>
+                                            <a class="remove-cart btn btn-inverse btn-sm p-l-30 p-r-30 m-l-30 " pid="{{c.product.id}}">Remove</a>
+                                        </div>
+                                    </td>
+                                    
+                                    <td class="cart-price text-center">${{c.product.discount_price|floatformat:2}}</td>
+                                    
+                                    <td class="cart-qty text-center">
+                                        <div class="cart-qty-input">
+                                            <a class="minus-cart btn "  pid="{{c.product.id}}"><i class="fa fa-minus"></i></a>
+                                            <span class="form-control" id="quantity">{{c.product_qty}}</span>
+                                            <a class="plus-cart btn" pid="{{c.product.id}}"><i class="fa fa-plus"></i></a>
+                                        </div>
+                                        <div class="qty-desc">1 to max order</div>
+                                    </td>
+                                    <td class="cart-total text-center">
+                                        <span id="amount">${{c.total_amount|floatformat:2}}</span>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td class="cart-summary" colspan="4">
+                                        <div class="summary-container">
+                                            <div class="summary-row">
+                                                <div class="field">Cart Subtotal</div>
+                                                <div class="value" id="subtotal">${{subtotal|floatformat:2}}</div>
+                                            </div>
+                                            <div class="summary-row text-danger">
+                                                <div class="field">Free Shipping</div>
+                                                <div class="value">$100.00</div>
+                                            </div>
+                                            <div class="summary-row total">
+                                                <div class="field">Total</div>
+                                                <div class="value" id="totalshipping">${{total|floatformat:2}}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- END checkout-body -->
+                <!-- BEGIN checkout-footer -->
+                <div class="checkout-footer">
+                    <a href="#" class="btn btn-white btn-lg pull-left">Continue Shopping</a>
+                    <a href="{% url 'checkoutinfo' %}" class="btn btn-inverse btn-lg p-l-30 p-r-30 m-l-10">Checkout</a>
+                </div>
+                <!-- END checkout-footer -->
+            </form>
+        </div>
+        <!-- END checkout -->
+    </div>
+    <!-- END container -->
+</div>
+<!-- END #checkout-cart -->
+
+{% endblock content %}
+
+{% block content1 %}
+{% include 'main/policy.html' %}
+{% endblock content1 %}

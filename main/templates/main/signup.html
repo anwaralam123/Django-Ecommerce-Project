@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="container mt-5">
+        <h3 class="text-center alert alert-success">Create a New Account</h3>
+        <div class="row d-flex justify-content-center ">
+            <div class="col-sm-5 shadow p-3 mb-5 bg-body-tertiary rounded border border-success-subtle">
+                <h5 class="text-left alert alert-success">Signup Page</h5>
+                <form action=""  method="POST" novalidate>
+                    {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="alert alert-warning text-danger ">{{error}}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% for fm in form %}
+                        {{fm.label_tag}} {{fm}} {{fm.errors|striptags}}
+                    {% endfor %}
+                    <input type="submit" class="btn btn-success mt-3" value="Register Now">
+                    <a href="{% url 'login' %}" class="btn btn-primary mt-3">Already have an account?</a>
+                    <a href="#" class="  mt-5" >Forgetten Password</a>
+                </form>
+                
+                {% if messages %}
+                    {% for message in messages %}
+                        <small {% if message.tags %} class="{{messages.tags}}" {% endif %}>{{message}}</small>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- <form action="" method="POST" novalidate>
+        {% csrf_token %}
+        {% for fm in form %}
+            {{fm.label_tag}} {{fm}} {{fm.errors|striptags}} <br><br>
+        {% endfor %}
+        <input type="submit" value="Register Here">
+    </form> -->
+    
+{% endblock content %}
